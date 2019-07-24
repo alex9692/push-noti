@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path')
 const webpush = require("web-push");
 const bodyParser = require("body-parser");
 
@@ -13,6 +14,7 @@ webpush.setVapidDetails(
 );
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'client')));
 
 app.post("/subscribe", (req, res) => {
 	const subscription = req.body;
@@ -30,7 +32,6 @@ app.post("/subscribe", (req, res) => {
 		});
 });
 
-app.use(require("express-static")("./"));
 app.listen(3001, () => {
 	console.log("running in port 3001");
 });
